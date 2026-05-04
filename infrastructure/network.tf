@@ -94,8 +94,9 @@ resource "aws_vpc_endpoint" "s3" {
   tags = { Name = "vpce-s3-${var.environment}" }
 }
 
+
 resource "aws_security_group" "vpce_sqs_sg" {
-  name        = "sg-vpce-sqs-${var.environment}"
+  name        = "vpce-sqs-sg-${var.environment}" # <-- CORREGIDO AQUÍ
   description = "Permitir HTTPS interno hacia SQS"
   vpc_id      = aws_vpc.main.id
 
@@ -103,10 +104,9 @@ resource "aws_security_group" "vpce_sqs_sg" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr] # Solo permite tráfico de nuestra propia VPC
+    cidr_blocks = [var.vpc_cidr]
   }
 }
-
 resource "aws_vpc_endpoint" "sqs" {
   vpc_id              = aws_vpc.main.id
   service_name        = "com.amazonaws.us-east-1.sqs"
