@@ -11,7 +11,7 @@ data "archive_file" "crop_zip" {
 }
 
 resource "aws_security_group" "lambda_sg" {
-  name        = "sg-lambda-${var.environment}"
+  name        = "security-g-lambda-${var.environment}"
   vpc_id      = aws_vpc.main.id
   egress { 
     from_port = 443
